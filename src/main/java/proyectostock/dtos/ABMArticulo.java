@@ -6,6 +6,7 @@
 package proyectostock.dtos;
 
 import javax.swing.JComboBox;
+import proyectostock.controller.RellenarCombos;
 import proyectostock.entities.Articulo;
 import proyectostock.entities.TipoArticulo;
 import proyectostock.repository.*;
@@ -17,11 +18,13 @@ import proyectostock.repository.*;
  */
 public class ABMArticulo extends javax.swing.JFrame {
     
+    RellenarCombos re = new RellenarCombos();
     public ABMArticulo() {
         initComponents();
         this.setLocationRelativeTo(null);
         Articulo objetoArticulo = new Articulo();
         objetoArticulo.MostrarArticulos(tbTotalArticulos);
+        re.RellenarComboBox("tipoarticulo", "nombreTipoArticulo", jComboTipoArticulo);
     }
 
     /**
@@ -48,11 +51,11 @@ public class ABMArticulo extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        javax.swing.JComboBox<String> jComboTipoArticulo = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         txtpuntoPedido = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtcostoAlmacenimiento = new javax.swing.JTextField();
+        jComboTipoArticulo = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbTotalArticulos = new javax.swing.JTable();
@@ -100,20 +103,6 @@ public class ABMArticulo extends javax.swing.JFrame {
 
         jLabel7.setText("Tipo");
 
-        jComboTipoArticulo.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                jComboTipoArticuloComponentAdded(evt);
-            }
-            public void componentRemoved(java.awt.event.ContainerEvent evt) {
-                jComboTipoArticuloComponentRemoved(evt);
-            }
-        });
-        jComboTipoArticulo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboTipoArticuloActionPerformed(evt);
-            }
-        });
-
         jLabel8.setText("CostoAlmacen");
 
         jLabel9.setText("PuntoPedido");
@@ -152,13 +141,13 @@ public class ABMArticulo extends javax.swing.JFrame {
                         .addComponent(txtpuntoPedido)
                         .addGap(1, 1, 1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtcostoAlmacenimiento))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(65, 65, 65)
-                        .addComponent(jComboTipoArticulo, 0, 103, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtcostoAlmacenimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                            .addComponent(jComboTipoArticulo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -202,7 +191,7 @@ public class ABMArticulo extends javax.swing.JFrame {
                 .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEliminar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Artículos"));
@@ -277,18 +266,6 @@ public class ABMArticulo extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void jComboTipoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboTipoArticuloActionPerformed
-
-    }//GEN-LAST:event_jComboTipoArticuloActionPerformed
-
-    private void jComboTipoArticuloComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jComboTipoArticuloComponentAdded
-
-    }//GEN-LAST:event_jComboTipoArticuloComponentAdded
-
-    private void jComboTipoArticuloComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jComboTipoArticuloComponentRemoved
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboTipoArticuloComponentRemoved
-
     private void tbTotalArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTotalArticulosMouseClicked
         Articulo objetoArticulo = new Articulo();
         objetoArticulo.SeleccionarArticulo(tbTotalArticulos, txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockSeguridadArticulo, txtstockActual, txtpuntoPedido, txtcostoAlmacenimiento);
@@ -347,6 +324,7 @@ public class ABMArticulo extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> jComboTipoArticulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
