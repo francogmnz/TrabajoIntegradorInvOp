@@ -230,6 +230,7 @@ CREATE TABLE `tipoarticulo` (
 
 LOCK TABLES `tipoarticulo` WRITE;
 /*!40000 ALTER TABLE `tipoarticulo` DISABLE KEYS */;
+INSERT INTO `tipoarticulo` VALUES (1,'Campera',1),(2,'Buzos',2),(3,'Accesorios',2),(4,'Remeras',3);
 /*!40000 ALTER TABLE `tipoarticulo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,4 +269,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-02 19:52:39
+-- Dump completed on 2024-06-02 20:13:03
