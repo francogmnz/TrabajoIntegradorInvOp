@@ -28,8 +28,7 @@ public class Articulo {
     private int stockActualArticulo;
     private int puntoPedidoArticulo;
     private float costoAlmacenimientoArticulo;
-  //  private TipoArticulo tipoArticulo;
-    private Demanda demanda;
+    private TipoArticulo tipoArticulo;
 
     public String getNombreArticulo() {
         return nombreArticulo;
@@ -123,6 +122,7 @@ public class Articulo {
             cs.setInt(5, getStockActualArticulo());       
             cs.setInt(6, getPuntoPedidoArticulo());  
             cs.setFloat(7, getCostoAlmacenimientoArticulo());  
+            //Falta el tipoArticulo
             cs.execute();
             
             JOptionPane.showMessageDialog(null, "Articulo agregado con éxito");
@@ -149,6 +149,7 @@ public class Articulo {
       modelo.addColumn("StockActual");
       modelo.addColumn("PuntoPedido");
       modelo.addColumn("CostoAlmacenimiento");
+      //Falta el TipoArticulo
       
       paramTablaTotalArticulos.setModel(modelo);
       
@@ -169,6 +170,7 @@ public class Articulo {
               datos[4]=rs.getString(5);
               datos[5]=rs.getString(6); 
               datos[6]=rs.getString(7);   
+              //Falta el tipoArticulo
           
              modelo.addRow(datos);
           } 
@@ -196,7 +198,7 @@ public class Articulo {
                 paramStockA.setText(paramTablaArticulos.getValueAt(fila, 4).toString());
                 paramPuntoP.setText(paramTablaArticulos.getValueAt(fila, 5).toString());
                 paramCostoA.setText(paramTablaArticulos.getValueAt(fila, 6).toString());
-                
+                //Falta el TipoArticulo
             }
             else 
             {
@@ -216,7 +218,7 @@ public class Articulo {
         setStockActualArticulo(Integer.parseInt(paramStockA.getText()));  
         setPuntoPedidoArticulo(Integer.parseInt(paramPuntoP.getText()));  
         setCostoAlmacenimientoArticulo(Float.parseFloat(paramCostoA.getText()));
-        
+        //Falta el tipo Articulo
         BaseRepository baseRepository = new BaseRepository();
         
         String consulta = "UPDATE Articulo set articulo.nombreArticulo = ?, articulo.codArticulo = ?, articulo.costoUnidadArticulo = ?, articulo.stockSeguridadArticulo = ?, articulo.stockActualArticulo = ?, articulo.puntoPedidoArticulo = ?, articulo.costoAlmacenimientoArticulo = ?;";
@@ -232,7 +234,7 @@ public class Articulo {
             cs.setInt(5, getStockActualArticulo());       
             cs.setInt(6, getPuntoPedidoArticulo());  
             cs.setFloat(7, getCostoAlmacenimientoArticulo());  
-            
+            //Falta tipoArticulo
             cs.execute();
             
             JOptionPane.showMessageDialog(null, "Se ha modificado con éxito.");

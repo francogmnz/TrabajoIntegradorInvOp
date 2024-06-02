@@ -6,4 +6,5 @@ public class Demanda {
     private int cantidad;
     private int mes;
     private String nombreMes;
+    private Articulo Articulo;
 }
