@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.*;
+import proyectostock.entities.TipoArticulo;
 
 /**
  *
@@ -99,7 +100,7 @@ public class Articulo {
   //  }
 
     
-    public void AgregarArticulo(JTextField paramNombre,JTextField paramCod, JTextField paramCosto, JTextField paramStockS, JTextField paramStockA, JTextField paramPuntoP, JTextField paramCostoA){
+    public void AgregarArticulo(JTextField paramNombre,JTextField paramCod, JTextField paramCosto, JTextField paramStockS, JTextField paramStockA, JTextField paramPuntoP, JTextField paramCostoA, JTextField idTipoArticulo){
         setNombreArticulo(paramNombre.getText());
         setCodArticulo(Integer.parseInt(paramCod.getText()));
         setCostoUnidadArticulo(Float.parseFloat(paramCosto.getText()));  
@@ -110,7 +111,7 @@ public class Articulo {
         //Falta el TipoArticulo
         BaseRepository baseRepository = new BaseRepository();
         
-        String consulta = "insert into Articulo (nombreArticulo, codArticulo, costoUnidadArticulo, stockSeguridadArticulo, stockActualArticulo, puntoPedidoArticulo, costoAlmacenimientoArticulo) values (?,?,?,?,?,?,?)";
+        String consulta = "insert into Articulo (nombreArticulo, codArticulo, costoUnidadArticulo, stockSeguridadArticulo, stockActualArticulo, puntoPedidoArticulo, costoAlmacenimientoArticulo, codigoTipoArticulo) values (?,?,?,?,?,?,?,?)";
         //Falta el TipoArticulo
         try {
             
@@ -122,7 +123,7 @@ public class Articulo {
             cs.setInt(5, getStockActualArticulo());       
             cs.setInt(6, getPuntoPedidoArticulo());  
             cs.setFloat(7, getCostoAlmacenimientoArticulo());  
-            //Falta el tipoArticulo
+            cs.setString(8, idTipoArticulo.getText());
             cs.execute();
             
             JOptionPane.showMessageDialog(null, "Articulo agregado con éxito");
@@ -149,13 +150,15 @@ public class Articulo {
       modelo.addColumn("StockActual");
       modelo.addColumn("PuntoPedido");
       modelo.addColumn("CostoAlmacenimiento");
+      modelo.addColumn("TipoArticulo");
       //Falta el TipoArticulo
       
       paramTablaTotalArticulos.setModel(modelo);
       
-      sql = "select * from Articulo;";
+      sql = "SELECT articulo.nombreArticulo, articulo.codArticulo, articulo.costoUnidadArticulo, articulo.stockSeguridadArticulo, articulo.stockActualArticulo, articulo.puntoPedidoArticulo, articulo.costoAlmacenimientoArticulo, tipoarticulo.nombreTipoArticulo\n" +
+      "FROM articulo INNER JOIN tipoarticulo ON articulo.codigoTipoArticulo = tipoarticulo.codigoTipoArticulo;";
       
-      String[] datos = new String[7];
+      String[] datos = new String[8];
       Statement st;
       
       try {
@@ -170,7 +173,7 @@ public class Articulo {
               datos[4]=rs.getString(5);
               datos[5]=rs.getString(6); 
               datos[6]=rs.getString(7);   
-              //Falta el tipoArticulo
+              datos[7]=rs.getString(8);   
           
              modelo.addRow(datos);
           } 
@@ -210,7 +213,7 @@ public class Articulo {
         
     }
     
-    public void ModificarArticulos(JTextField paramNombre,JTextField paramCod, JTextField paramCosto, JTextField paramStockS, JTextField paramStockA, JTextField paramPuntoP, JTextField paramCostoA){
+    public void ModificarArticulos(JTextField paramNombre,JTextField paramCod, JTextField paramCosto, JTextField paramStockS, JTextField paramStockA, JTextField paramPuntoP, JTextField paramCostoA, JTextField idTipoArticulo){
         setNombreArticulo(paramNombre.getText());
         setCodArticulo(Integer.parseInt(paramCod.getText()));
         setCostoUnidadArticulo(Float.parseFloat(paramCosto.getText()));  
@@ -218,10 +221,9 @@ public class Articulo {
         setStockActualArticulo(Integer.parseInt(paramStockA.getText()));  
         setPuntoPedidoArticulo(Integer.parseInt(paramPuntoP.getText()));  
         setCostoAlmacenimientoArticulo(Float.parseFloat(paramCostoA.getText()));
-        //Falta el tipo Articulo
         BaseRepository baseRepository = new BaseRepository();
-        
-        String consulta = "UPDATE Articulo set articulo.nombreArticulo = ?, articulo.codArticulo = ?, articulo.costoUnidadArticulo = ?, articulo.stockSeguridadArticulo = ?, articulo.stockActualArticulo = ?, articulo.puntoPedidoArticulo = ?, articulo.costoAlmacenimientoArticulo = ?;";
+        //Falta el TipoArticulo
+        String consulta = "UPDATE Articulo set articulo.nombreArticulo = ?, articulo.codArticulo = ?, articulo.costoUnidadArticulo = ?, articulo.stockSeguridadArticulo = ?, articulo.stockActualArticulo = ?, articulo.puntoPedidoArticulo = ?, articulo.costoAlmacenimientoArticulo = ?, articulo.codigoTipoArticulo = ?;";
         
         try {
             
@@ -234,7 +236,7 @@ public class Articulo {
             cs.setInt(5, getStockActualArticulo());       
             cs.setInt(6, getPuntoPedidoArticulo());  
             cs.setFloat(7, getCostoAlmacenimientoArticulo());  
-            //Falta tipoArticulo
+            cs.setString(8, idTipoArticulo.getText());
             cs.execute();
             
             JOptionPane.showMessageDialog(null, "Se ha modificado con éxito.");

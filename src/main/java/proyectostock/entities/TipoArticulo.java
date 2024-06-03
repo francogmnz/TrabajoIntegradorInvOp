@@ -5,7 +5,12 @@
  */
 package proyectostock.entities;
 
-import java.time.LocalDate;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import proyectostock.repository.BaseRepository;
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -13,30 +18,46 @@ import java.time.LocalDate;
  */
 public class TipoArticulo {
     
-    private String nombreTipoArt;
-    private int codigoTipoArt;
-    
-    public TipoArticulo(String nombreTipoArt, int codigoTipoArt) {
-    this.nombreTipoArt = nombreTipoArt;
-    this.codigoTipoArt = codigoTipoArt;
+    private String nombreTipoArticulo;
+    private int codigoTipoArticulo;
+
+    public String getNombreTipoArticulo() {
+        return nombreTipoArticulo;
     }
 
-    public String getNombreTipoArt() {
-        return nombreTipoArt;
+    public void setNombreTipoArticulo(String nombreTipoArticulo) {
+        this.nombreTipoArticulo = nombreTipoArticulo;
     }
 
-    public void setNombreTipoArt(String nombreTipoArt) {
-        this.nombreTipoArt = nombreTipoArt;
-    }
-    
-    public int getCodigoTipoArt() {
-        return codigoTipoArt;
+    public int getCodigoTipoArticulo() {
+        return codigoTipoArticulo;
     }
 
-    public void setCodigoTipoArt(int codigoTipoArt) {
-        this.codigoTipoArt = codigoTipoArt;
+    public void setCodigoTipoArticulo(int codigoTipoArticulo) {
+        this.codigoTipoArticulo = codigoTipoArticulo;
     }
     
+        public void MostrarCodigoPorTipoArticulo(JComboBox tipoArticuloCombo, JTextField idTipoArticulo){
+        
+        String consulta = "SELECT tipoarticulo.codigoTipoArticulo FROM tipoarticulo WHERE tipoarticulo.nombreTipoArticulo = ?";
+        BaseRepository baseRepository = new BaseRepository();
+        
+        try {
+          CallableStatement cs = baseRepository.estableceConexion().prepareCall(consulta);
+          cs.setString(1, tipoArticuloCombo.getSelectedItem().toString());
+          cs.execute();
+          
+          ResultSet rs = cs.executeQuery();
+          
+          if(rs.next()){
+              idTipoArticulo.setText(rs.getString("codigoTipoArticulo"));
+          }
+          
+          } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, "Error:" +e.toString());
+      }
+    }
+
     
     
 }

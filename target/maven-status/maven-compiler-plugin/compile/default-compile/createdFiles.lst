@@ -23,3 +23,4 @@ proyectostock\main.class
 proyectostock\entities\Venta.class
 proyectostock\entities\TipoArticulo.class
 proyectostock\dtos\ABMArticulo$2.class
+proyectostock\dtos\ABMArticulo$7.class

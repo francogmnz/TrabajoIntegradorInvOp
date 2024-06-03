@@ -8,7 +8,7 @@ package proyectostock.dtos;
 import javax.swing.JComboBox;
 import proyectostock.controller.RellenarCombos;
 import proyectostock.entities.Articulo;
-import proyectostock.entities.TipoArticulo;
+import proyectostock.entities.*;
 import proyectostock.repository.*;
 
 
@@ -25,6 +25,7 @@ public class ABMArticulo extends javax.swing.JFrame {
         Articulo objetoArticulo = new Articulo();
         objetoArticulo.MostrarArticulos(tbTotalArticulos);
         re.RellenarComboBox("tipoarticulo", "nombreTipoArticulo", jComboTipoArticulo);
+        txtcodigoTipoArticulo.setVisible(false);
     }
 
     /**
@@ -56,6 +57,7 @@ public class ABMArticulo extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtcostoAlmacenimiento = new javax.swing.JTextField();
         jComboTipoArticulo = new javax.swing.JComboBox<>();
+        txtcodigoTipoArticulo = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbTotalArticulos = new javax.swing.JTable();
@@ -107,6 +109,12 @@ public class ABMArticulo extends javax.swing.JFrame {
 
         jLabel9.setText("PuntoPedido");
 
+        jComboTipoArticulo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboTipoArticuloItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -116,38 +124,38 @@ public class ABMArticulo extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtcodArticulo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtcostoUnidadArticulo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtnombreArticulo)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtstockSeguridadArticulo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(25, 25, 25)
-                        .addComponent(txtstockActual))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtpuntoPedido)
-                        .addGap(1, 1, 1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                                .addComponent(txtcodigoTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtcostoAlmacenimiento)
+                            .addComponent(jComboTipoArticulo, 0, 118, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtcostoAlmacenimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                            .addComponent(jComboTipoArticulo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtpuntoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                            .addComponent(txtstockActual)
+                            .addComponent(txtstockSeguridadArticulo)))
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtcodArticulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                            .addComponent(txtnombreArticulo)
+                            .addComponent(txtcostoUnidadArticulo))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -184,14 +192,15 @@ public class ABMArticulo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcodigoTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnGuardar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEliminar)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Artículos"));
@@ -219,14 +228,14 @@ public class ABMArticulo extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -234,9 +243,9 @@ public class ABMArticulo extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -260,8 +269,7 @@ public class ABMArticulo extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
       
         Articulo objetoArticulo = new Articulo();
-        objetoArticulo.AgregarArticulo(txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockSeguridadArticulo, txtstockActual, txtpuntoPedido, txtcostoAlmacenimiento);
-        //FaltaTipoArticulo
+        objetoArticulo.AgregarArticulo(txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockSeguridadArticulo, txtstockActual, txtpuntoPedido, txtcostoAlmacenimiento, txtcodigoTipoArticulo);
         objetoArticulo.MostrarArticulos(tbTotalArticulos);
         
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -273,8 +281,7 @@ public class ABMArticulo extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         Articulo objetoArticulo = new Articulo();
-        objetoArticulo.ModificarArticulos(txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockSeguridadArticulo, txtstockActual, txtpuntoPedido, txtcostoAlmacenimiento);
-        //FaltaTipoArticulo
+        objetoArticulo.ModificarArticulos(txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockSeguridadArticulo, txtstockActual, txtpuntoPedido, txtcostoAlmacenimiento, txtcodigoTipoArticulo);
         objetoArticulo.MostrarArticulos(tbTotalArticulos);
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -284,6 +291,11 @@ public class ABMArticulo extends javax.swing.JFrame {
         //FaltaTipoArticulo
         objetoArticulo.MostrarArticulos(tbTotalArticulos);
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void jComboTipoArticuloItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboTipoArticuloItemStateChanged
+       TipoArticulo objetoTipoArticulo = new TipoArticulo();
+       objetoTipoArticulo.MostrarCodigoPorTipoArticulo(jComboTipoArticulo, txtcodigoTipoArticulo);
+    }//GEN-LAST:event_jComboTipoArticuloItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -338,6 +350,7 @@ public class ABMArticulo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbTotalArticulos;
     private javax.swing.JTextField txtcodArticulo;
+    private javax.swing.JTextField txtcodigoTipoArticulo;
     private javax.swing.JTextField txtcostoAlmacenimiento;
     private javax.swing.JTextField txtcostoUnidadArticulo;
     private javax.swing.JTextField txtnombreArticulo;

@@ -4,6 +4,7 @@
  */
 package proyectostock.controller;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JComboBox;
@@ -30,4 +31,5 @@ public class RellenarCombos {
            JOptionPane.showMessageDialog(null, "Error:" +e.toString());
       }
     }
+    
 }
