@@ -2,6 +2,7 @@ proyectostock\entities\DetalleVenta.class
 proyectostock\dtos\ABMArticulo$4.class
 proyectostock\entities\DetalleOrdenCompra.class
 proyectostock\controller\RellenarCombos.class
+proyectostock\dtos\AltaVenta$1.class
 proyectostock\dtos\Main$2.class
 proyectostock\entities\Proveedor.class
 proyectostock\entities\EstadoOrdenCompra.class
@@ -14,7 +15,9 @@ proyectostock\dtos\Main.class
 proyectostock\dtos\Main$4.class
 proyectostock\entities\OrdenCompra.class
 proyectostock\dtos\ABMArticulo$3.class
+proyectostock\dtos\AltaVenta$2.class
 proyectostock\dtos\Main$5.class
+proyectostock\dtos\AltaVenta.class
 proyectostock\repository\BaseRepository.class
 proyectostock\dtos\Main$3.class
 proyectostock\dtos\ABMArticulo$5.class
