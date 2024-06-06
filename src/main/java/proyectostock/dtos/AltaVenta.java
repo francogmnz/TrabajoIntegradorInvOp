@@ -194,6 +194,8 @@ public class AltaVenta extends javax.swing.JFrame {
 
     private void jButtonAgregarArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarArticuloActionPerformed
         // TODO add your handling code here:
+        AgregarArticulo agregarArt = new AgregarArticulo();
+        agregarArt.setVisible(true);
     }//GEN-LAST:event_jButtonAgregarArticuloActionPerformed
 
     /**
