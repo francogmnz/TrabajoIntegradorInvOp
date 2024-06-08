@@ -10,6 +10,7 @@ import proyectostock.repository.BaseRepository;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -112,7 +113,7 @@ public class Articulo {
         BaseRepository baseRepository = new BaseRepository();
         
         String consulta = "insert into Articulo (nombreArticulo, codArticulo, costoUnidadArticulo, stockSeguridadArticulo, stockActualArticulo, puntoPedidoArticulo, costoAlmacenimientoArticulo, codigoTipoArticulo) values (?,?,?,?,?,?,?,?)";
-        //Falta el TipoArticulo
+        
         try {
             
             CallableStatement cs = baseRepository.estableceConexion().prepareCall(consulta);
@@ -125,6 +126,7 @@ public class Articulo {
             cs.setFloat(7, getCostoAlmacenimientoArticulo());  
             cs.setString(8, idTipoArticulo.getText());
             cs.execute();
+            
             
             JOptionPane.showMessageDialog(null, "Articulo agregado con éxito");
                     
@@ -151,7 +153,6 @@ public class Articulo {
       modelo.addColumn("PuntoPedido");
       modelo.addColumn("CostoAlmacenimiento");
       modelo.addColumn("TipoArticulo");
-      //Falta el TipoArticulo
       
       paramTablaTotalArticulos.setModel(modelo);
       
@@ -265,6 +266,27 @@ public class Articulo {
         } catch (Exception e){
            JOptionPane.showMessageDialog(null, "Error en la eliminación:" +e.toString());
         }
+    }
+    
+        public void MostrarCodigoArticulo(JComboBox articuloCombo, JTextField idArticulo){
+        
+        String consulta = "SELECT articulo.codArticulo FROM articulo WHERE articulo.nombreArticulo = ?";
+        BaseRepository baseRepository = new BaseRepository();
+        
+        try {
+          CallableStatement cs = baseRepository.estableceConexion().prepareCall(consulta);
+          cs.setString(1, articuloCombo.getSelectedItem().toString());
+          cs.execute();
+          
+          ResultSet rs = cs.executeQuery();
+          
+          if(rs.next()){
+              idArticulo.setText(rs.getString("codArticulo"));
+          }
+          
+          } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, "Error:" +e.toString());
+      }
     }
     
     
