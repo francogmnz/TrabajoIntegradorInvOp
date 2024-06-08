@@ -43,6 +43,7 @@ CREATE TABLE `articulo` (
 
 LOCK TABLES `articulo` WRITE;
 /*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
+INSERT INTO `articulo` VALUES ('Camiseta Boca',1,70000,50,75,60,13,1),('Remera Nike',2,20000,60,75,55,10.3,4),('Patito',3,1000,80,90,84,1.3,3),('Lentes',4,40000,50,52,55,3,3),('Buzo Ripcurl',5,42400,20,30,44,9,1);
 /*!40000 ALTER TABLE `articulo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,12 +55,13 @@ DROP TABLE IF EXISTS `demanda`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `demanda` (
+  `numeroDemanda` int NOT NULL,
   `anio` int DEFAULT NULL,
   `cantidad` int DEFAULT NULL,
   `mes` int NOT NULL,
   `nombreMes` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `codArticulo` int NOT NULL,
-  PRIMARY KEY (`mes`),
+  `codArticulo` int DEFAULT NULL,
+  PRIMARY KEY (`numeroDemanda`),
   KEY `fk_codArticulo_idx` (`codArticulo`),
   CONSTRAINT `fk_codArticulo` FOREIGN KEY (`codArticulo`) REFERENCES `articulo` (`codArticulo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -71,6 +73,7 @@ CREATE TABLE `demanda` (
 
 LOCK TABLES `demanda` WRITE;
 /*!40000 ALTER TABLE `demanda` DISABLE KEYS */;
+INSERT INTO `demanda` VALUES (1,2024,500,1,'Enero',1),(2,2024,450,2,'Febrero',1),(3,2024,200,2,'Febrero',3);
 /*!40000 ALTER TABLE `demanda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,4 +272,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-02 20:13:03
+-- Dump completed on 2024-06-06 19:16:38
