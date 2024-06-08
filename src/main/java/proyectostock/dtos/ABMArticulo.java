@@ -115,6 +115,17 @@ public class ABMArticulo extends javax.swing.JFrame {
                 jComboTipoArticuloItemStateChanged(evt);
             }
         });
+        jComboTipoArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboTipoArticuloActionPerformed(evt);
+            }
+        });
+
+        txtcodigoTipoArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtcodigoTipoArticuloActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -303,7 +314,6 @@ public class ABMArticulo extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         Articulo objetoArticulo = new Articulo();
         objetoArticulo.EliminarArticulo(txtcodArticulo);
-        //FaltaTipoArticulo
         objetoArticulo.MostrarArticulos(tbTotalArticulos);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -316,6 +326,14 @@ public class ABMArticulo extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonCerrarActionPerformed
+
+    private void jComboTipoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboTipoArticuloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboTipoArticuloActionPerformed
+
+    private void txtcodigoTipoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoTipoArticuloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcodigoTipoArticuloActionPerformed
 
     /**
      * @param args the command line arguments
