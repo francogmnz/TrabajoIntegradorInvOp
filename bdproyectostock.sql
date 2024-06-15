@@ -73,7 +73,7 @@ CREATE TABLE `demanda` (
 
 LOCK TABLES `demanda` WRITE;
 /*!40000 ALTER TABLE `demanda` DISABLE KEYS */;
-INSERT INTO `demanda` VALUES (1,2024,500,1,'Enero',1),(2,2024,450,2,'Febrero',1),(3,2024,200,2,'Febrero',3);
+INSERT INTO `demanda` VALUES (1,2024,500,1,'Enero',1),(2,2024,450,2,'Febrero',1),(3,2024,200,2,'Febrero',3),(4,2024,230,3,'Marzo',1),(5,2024,210,4,'Abril',1),(6,2024,500,5,'Mayo',1),(7,2024,600,3,'Marzo',3),(8,2024,420,6,'Junio',1);
 /*!40000 ALTER TABLE `demanda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +196,11 @@ CREATE TABLE `proveedor` (
   `nombreProveedor` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `codProveedor` int NOT NULL,
   `celular` int DEFAULT NULL,
-  PRIMARY KEY (`codProveedor`)
+  `tipoArticuloId` int DEFAULT NULL,
+  `diasDemora` int DEFAULT NULL,
+  PRIMARY KEY (`codProveedor`),
+  KEY `fk_idTipoArticulo_idx` (`tipoArticuloId`),
+  CONSTRAINT `fk_idTipoArticulo` FOREIGN KEY (`tipoArticuloId`) REFERENCES `tipoarticulo` (`codigoTipoArticulo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -206,7 +210,7 @@ CREATE TABLE `proveedor` (
 
 LOCK TABLES `proveedor` WRITE;
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
-INSERT INTO `proveedor` VALUES ('Diego',1,29445532),('Facundo',2,2612322),('Jorge',3,261334545);
+INSERT INTO `proveedor` VALUES ('Mateo',1,292034,1,2);
 /*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,10 +224,7 @@ DROP TABLE IF EXISTS `tipoarticulo`;
 CREATE TABLE `tipoarticulo` (
   `codigoTipoArticulo` int NOT NULL,
   `nombreTipoArticulo` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `codProveedor` int NOT NULL,
-  PRIMARY KEY (`codigoTipoArticulo`),
-  KEY `fk_proveedorTA_idx` (`codProveedor`),
-  CONSTRAINT `fk_proveedorTA` FOREIGN KEY (`codProveedor`) REFERENCES `proveedor` (`codProveedor`)
+  PRIMARY KEY (`codigoTipoArticulo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -233,7 +234,7 @@ CREATE TABLE `tipoarticulo` (
 
 LOCK TABLES `tipoarticulo` WRITE;
 /*!40000 ALTER TABLE `tipoarticulo` DISABLE KEYS */;
-INSERT INTO `tipoarticulo` VALUES (1,'Campera',1),(2,'Buzos',2),(3,'Accesorios',2),(4,'Remeras',3);
+INSERT INTO `tipoarticulo` VALUES (1,'Campera'),(2,'Buzos'),(3,'Accesorios'),(4,'Remeras');
 /*!40000 ALTER TABLE `tipoarticulo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,4 +273,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-06 19:16:38
+-- Dump completed on 2024-06-15 19:36:26

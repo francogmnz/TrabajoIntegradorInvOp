@@ -4,9 +4,7 @@
  */
 package proyectostock.controller;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -291,6 +289,34 @@ public void obtenerUltimaCantidad(JTextField paramCodArticulo, JTextField paramU
         paramUltimaCantidad.setText("Error al obtener la cantidad");
     }
    }
+public void CalcularPMSuavizadoExponencialmente(JTextField paramUltimaCantidad, JTextField paramDemandaEsperada, JTextField paramAlfa, JTextField paramResultadoPMSuavizado) {
+    try {
+        // Obtener los valores de los JTextFields
+        double ultimaCantidad = Double.parseDouble(paramUltimaCantidad.getText());
+        double demandaEsperada = Double.parseDouble(paramDemandaEsperada.getText());
+        double alfa = Double.parseDouble(paramAlfa.getText());
+
+        // Validar que alfa esté en el rango [0, 1]
+        if (alfa < 0 || alfa > 1) {
+            paramResultadoPMSuavizado.setText("El valor de alfa debe estar entre 0 y 1");
+            return;
+        }
+
+        // Calcular el Promedio Movil Suavizado Exponencialmente (PMSuavizado)
+        double pmsuavizado = alfa * ultimaCantidad + (1 - alfa) * demandaEsperada;
+
+        // Mostrar el resultado en el JTextField correspondiente
+        paramResultadoPMSuavizado.setText(String.valueOf(pmsuavizado));
+    } catch (NumberFormatException e) {
+        e.printStackTrace();
+        paramResultadoPMSuavizado.setText("Error en el formato de los datos");
+    } catch (Exception e) {
+        e.printStackTrace();
+        paramResultadoPMSuavizado.setText("Error al calcular el PMSuavizado");
+    }
+}
+
+
 
 } 
 

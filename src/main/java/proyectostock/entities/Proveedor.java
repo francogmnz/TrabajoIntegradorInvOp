@@ -5,7 +5,13 @@
  */
 package proyectostock.entities;
 
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import proyectostock.repository.BaseRepository;
 
 /**
  *
@@ -16,11 +22,15 @@ public class Proveedor {
     private String nombreProveedor;
     private int codProveedor;
     private int celular;
+    private TipoArticulo tipoArticulo;
+    private int diasDemora;
 
-    public Proveedor(String nombreProveedor, int codProveedor, int celular) {
-        this.nombreProveedor = nombreProveedor;
+    public int getCodProveedor() {
+        return codProveedor;
+    }
+
+    public void setCodProveedor(int codProveedor) {
         this.codProveedor = codProveedor;
-        this.celular = celular;
     }
 
     public String getNombreProveedor() {
@@ -31,14 +41,6 @@ public class Proveedor {
         this.nombreProveedor = nombreProveedor;
     }
 
-    public int getCodProveedor() {
-        return codProveedor;
-    }
-
-    public void setCodProveedor(int codProveedor) {
-        this.codProveedor = codProveedor;
-    }
-
     public int getCelular() {
         return celular;
     }
@@ -47,9 +49,54 @@ public class Proveedor {
         this.celular = celular;
     }
 
+    public int getDiasDemora() {
+        return diasDemora;
+    }
 
-    
-    
+    public void setDiasDemora(int diasDemora) {
+        this.diasDemora = diasDemora;
+    }
+
+    public void AgregarProveedor(JTextField paramNombre, JTextField paramCodProveedor, JTextField paramNumContacto, JTextField idTipoArticulo, JTextField paramTiempoDemora) {
+        try {
+            String nombreProveedor = paramNombre.getText();
+            int codProveedor = Integer.parseInt(paramCodProveedor.getText());
+            int celular = Integer.parseInt(paramNumContacto.getText());
+            int diasDemora = Integer.parseInt(paramTiempoDemora.getText());
+            int codigoTipoArticulo = Integer.parseInt(idTipoArticulo.getText());
+
+            BaseRepository baseRepository = new BaseRepository();
+            String consulta = "INSERT INTO Proveedor (nombreProveedor, codProveedor, celular, tipoArticuloId, diasDemora) VALUES (?, ?, ?, ?, ?)";
+
+            try (CallableStatement cs = baseRepository.estableceConexion().prepareCall(consulta)) {
+                cs.setString(1, nombreProveedor);
+                cs.setInt(2, codProveedor);
+                cs.setInt(3, celular);
+                cs.setInt(4, codigoTipoArticulo);
+                cs.setInt(5, diasDemora);
+                cs.execute();
+                JOptionPane.showMessageDialog(null, "Proveedor agregado con éxito");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al agregar proveedor: " + e.toString());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en la entrada de datos: " + e.toString());
+        }
+    }
+
+    public void MostrarCodigoArticulo(JComboBox articuloCombo, JTextField idArticulo) {
+        String consulta = "SELECT codArticulo FROM articulo WHERE nombreArticulo = ?";
+        BaseRepository baseRepository = new BaseRepository();
+
+        try (CallableStatement cs = baseRepository.estableceConexion().prepareCall(consulta)) {
+            cs.setString(1, articuloCombo.getSelectedItem().toString());
+            try (ResultSet rs = cs.executeQuery()) {
+                if (rs.next()) {
+                    idArticulo.setText(rs.getString("codArticulo"));
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al mostrar código de artículo: " + e.toString());
+        }
+    }
 }
-
-
