@@ -4,6 +4,7 @@
  */
 package proyectostock.entities;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -45,9 +46,7 @@ public class Venta {
     public void setDetallesventa(List<DetalleVenta> detallesventa) {
         this.detallesventa = detallesventa;
     }
-
-
-    
+  
     
     
 }

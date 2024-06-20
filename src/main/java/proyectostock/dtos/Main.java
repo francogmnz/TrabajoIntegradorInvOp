@@ -77,7 +77,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Añadir proveedor");
+        jButton1.setText("Gestionar proveedores");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

@@ -287,9 +287,5 @@ public class Articulo {
           } catch (Exception e) {
            JOptionPane.showMessageDialog(null, "Error:" +e.toString());
       }
-    }
-    
-    
-    
-    
+        }
 }

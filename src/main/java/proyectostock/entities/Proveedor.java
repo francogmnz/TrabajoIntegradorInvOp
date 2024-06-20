@@ -7,10 +7,15 @@ package proyectostock.entities;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import proyectostock.repository.BaseRepository;
 
 /**
@@ -57,6 +62,52 @@ public class Proveedor {
         this.diasDemora = diasDemora;
     }
 
+    public void MostrarProveedores(JTable paramTablaProveedores){
+      
+      BaseRepository baseRepository = new BaseRepository();
+      DefaultTableModel modelo = new DefaultTableModel();
+      TableRowSorter<TableModel> OrdenarTabla = new TableRowSorter<TableModel> (modelo);
+      paramTablaProveedores.setRowSorter(OrdenarTabla);
+      
+      String sql="";
+      
+      modelo.addColumn("Nombre");
+      modelo.addColumn("Código");
+      modelo.addColumn("Celular");
+
+      
+      paramTablaProveedores.setModel(modelo);
+      
+      sql = "SELECT proveedor.nombreProveedor, proveedor.codProveedor, proveedor.celular\n" +
+      "FROM proveedor;";
+      
+      String[] datos = new String[8];
+      Statement st;
+      
+      try {
+          st = baseRepository.estableceConexion().createStatement();
+          ResultSet rs = st.executeQuery(sql);
+          
+          while(rs.next()){
+              datos[0]=rs.getString(1);
+              datos[1]=rs.getString(2);
+              datos[2]=rs.getString(3);
+ 
+          
+             modelo.addRow(datos);
+          } 
+          
+          paramTablaProveedores.setModel(modelo);
+          
+          
+      } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, "Error al mostrar los registros:" +e.toString());
+      }
+      
+ 
+  }
+    
+    
     public void AgregarProveedor(JTextField paramNombre, JTextField paramCodProveedor, JTextField paramNumContacto, JTextField idTipoArticulo, JTextField paramTiempoDemora) {
         try {
             String nombreProveedor = paramNombre.getText();
