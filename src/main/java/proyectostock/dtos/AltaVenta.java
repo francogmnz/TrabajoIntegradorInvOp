@@ -252,7 +252,8 @@ public class AltaVenta extends javax.swing.JFrame {
          @Override
          public void actionPerformed(ActionEvent e) {
             ConfirmacionNuevaVenta newframe = new ConfirmacionNuevaVenta();
-            int result = JOptionPane.showConfirmDialog(newframe,"Estas seguro que querés guardar la venta?", "Confirmación Guardado de Venta",
+            Object[] options = {"Confirmar", "Cancelar"};
+            int result = JOptionPane.showConfirmDialog(newframe,"Estas seguro que querés cargar la venta?", "Confirmación Guardado de Venta",
                JOptionPane.YES_NO_OPTION,
                JOptionPane.QUESTION_MESSAGE);
             if(result == JOptionPane.YES_OPTION){
