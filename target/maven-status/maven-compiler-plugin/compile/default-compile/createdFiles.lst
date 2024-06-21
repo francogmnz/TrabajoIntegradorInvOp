@@ -14,6 +14,7 @@ proyectostock\dtos\ABMArticulo$1.class
 proyectostock\dtos\Inventario$7.class
 proyectostock\dtos\ConfirmacionNuevaVenta$2.class
 proyectostock\dtos\CGI.class
+proyectostock\dtos\AltaVenta$14.class
 proyectostock\dtos\Main$10.class
 proyectostock\dtos\RegresionLineal$5.class
 proyectostock\dtos\ABMProveedores$1.class
@@ -50,7 +51,6 @@ proyectostock\dtos\ABMArticulo$2.class
 proyectostock\dtos\ModeloIntervaloFijo$1.class
 proyectostock\dtos\ModeloLoteFijo$2.class
 proyectostock\dtos\AltaVenta$7.class
-proyectostock\entities\DetalleVenta.class
 proyectostock\dtos\AltaVenta$3.class
 proyectostock\dtos\ConfirmacionNuevaVenta$1.class
 proyectostock\entities\DetalleOrdenCompra.class

@@ -101,7 +101,9 @@ public class Articulo {
   //  }
 
     
-    public void AgregarArticulo(JTextField paramNombre,JTextField paramCod, JTextField paramCosto, JTextField paramStockS, JTextField paramStockA, JTextField paramPuntoP, JTextField paramCostoA, JTextField idTipoArticulo){
+    public void AgregarArticulo(JTextField paramNombre,JTextField paramCod, 
+                                JTextField paramCosto, JTextField paramStockS, JTextField paramStockA, JTextField paramPuntoP, 
+                                JTextField paramCostoA, JTextField idTipoArticulo){
         setNombreArticulo(paramNombre.getText());
         setCodArticulo(Integer.parseInt(paramCod.getText()));
         setCostoUnidadArticulo(Float.parseFloat(paramCosto.getText()));  
