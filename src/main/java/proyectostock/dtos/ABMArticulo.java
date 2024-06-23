@@ -4,12 +4,10 @@
  * and open the template in the editor.
  */
 package proyectostock.dtos;
-
-import javax.swing.JComboBox;
 import proyectostock.controller.RellenarCombos;
 import proyectostock.entities.Articulo;
 import proyectostock.entities.*;
-import proyectostock.repository.*;
+
 
 
 /**

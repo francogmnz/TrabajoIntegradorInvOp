@@ -1,32 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package proyectostock.entities;
 
 import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.List;
-import javax.swing.JOptionPane;
-/**
- *
- * @author Franco
- */
 import java.sql.Statement;
-import javax.swing.JTextField;
 import proyectostock.repository.BaseRepository;
-import java.sql.CallableStatement;
-import java.sql.Date;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.time.LocalDate;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.table.TableModel;
@@ -103,7 +87,7 @@ public class Venta {
       
       paramTablaVenta.setModel(modelo);
       
-      sql = "SELECT venta.numVenta, venta.fechaVenta, venta.cantidad, venta.codArticulo\n" +
+      sql = "SELECT * " +
       "FROM venta;";
       
       String[] datos = new String[8];
@@ -132,7 +116,33 @@ public class Venta {
       
  
   }
+       
+       public void AgregarVenta(int paramCodArticulo, int paramCantidadVendida) {
+        try {
+            // Obtener la fecha actual
+            java.util.Date utilDate = new java.util.Date();
+            java.sql.Date fechaVenta = new java.sql.Date(utilDate.getTime()); // Convierte a java.sql.Date
+
+            int codArticulo = paramCodArticulo;
+            int cantidadVendida = paramCantidadVendida;
+
+            BaseRepository baseRepository = new BaseRepository();
+            String consulta = "INSERT INTO ventas (fecha_venta, cod_articulo, cantidad_vendida) VALUES (?, ?, ?)";
+
+            try (CallableStatement cs = baseRepository.estableceConexion().prepareCall(consulta)) {
+                cs.setDate(1, fechaVenta); // Establecer la fecha como java.sql.Date
+                cs.setInt(2, codArticulo);
+                cs.setInt(3, cantidadVendida);
+                cs.execute();
+                JOptionPane.showMessageDialog(null, "Venta agregada con éxito");
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al agregar venta: " + e.getMessage());
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Error: Ingresa un número válido para el código del artículo o la cantidad");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en la entrada de datos: " + e.toString());
+        }
+    
+    }
 }
-
-
-
