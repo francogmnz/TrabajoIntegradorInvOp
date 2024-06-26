@@ -16,7 +16,6 @@ proyectostock\dtos\ABMArticulo$1.class
 proyectostock\dtos\Inventario$7.class
 proyectostock\dtos\ConfirmacionNuevaVenta$2.class
 proyectostock\dtos\CGI.class
-proyectostock\dtos\AltaVenta$14.class
 proyectostock\dtos\Main$10.class
 proyectostock\dtos\DeterminarMejorOpcion$2.class
 proyectostock\dtos\ABMProveedores$1.class
@@ -35,6 +34,7 @@ proyectostock\dtos\ABMProveedores.class
 proyectostock\dtos\CGI$3.class
 proyectostock\dtos\ABMProveedores$3.class
 proyectostock\dtos\AltaVenta$10.class
+proyectostock\dtos\ModeloLoteFijo$5.class
 proyectostock\controller\RellenarCombos.class
 proyectostock\dtos\AltaVenta$1.class
 proyectostock\dtos\Main$2.class

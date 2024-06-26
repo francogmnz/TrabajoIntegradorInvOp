@@ -17,11 +17,7 @@ import javax.swing.table.TableModel;
 
 public class Venta {
 
-    private Date fechaVenta;
-
-    public Venta() {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   private Date fechaVenta;
 
     public Date getFechaVenta() {
         return fechaVenta;

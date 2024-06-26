@@ -20,8 +20,8 @@ public class ProductosFaltantes extends javax.swing.JFrame {
     public ProductosFaltantes() {
         initComponents();
         this.setLocationRelativeTo(null);
-        Inventarios objetoInventarios = new Inventarios();
-        objetoInventarios.MostrarProductosFaltantes(tbProductosFaltantes);
+    //    Inventarios objetoInventarios = new Inventarios();
+    //    objetoInventarios.MostrarProductosFaltantes(tbProductosFaltantes);
                 
     }
 

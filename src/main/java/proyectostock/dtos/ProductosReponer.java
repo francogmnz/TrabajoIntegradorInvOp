@@ -20,8 +20,8 @@ public class ProductosReponer extends javax.swing.JFrame {
     public ProductosReponer() {
         initComponents();
         this.setLocationRelativeTo(null);
-        Inventarios objetoInventarios = new Inventarios();
-        objetoInventarios.MostrarProductosAReponer(tbProductosAReponer);
+     //   Inventarios objetoInventarios = new Inventarios();
+     //   objetoInventarios.MostrarProductosAReponer(tbProductosAReponer);
                 
     }
 
