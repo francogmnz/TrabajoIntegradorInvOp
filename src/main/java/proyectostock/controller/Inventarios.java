@@ -205,7 +205,7 @@ public class Inventarios {
     }
 
     private double obtenerCostoPedido(String codArticulo) {
-        double costoPedido = 3;
+        double costoPedido = 0.0;
         try (Connection con = new BaseRepository().estableceConexion()) {
             String query = "SELECT costoPedidoArticulo FROM articulo WHERE codArticulo = ?";
             PreparedStatement pst = con.prepareStatement(query);

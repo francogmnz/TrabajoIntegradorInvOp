@@ -31,6 +31,9 @@ CREATE TABLE `articulo` (
   `costoAlmacenimientoArticulo` float DEFAULT NULL,
   `codigoTipoArticulo` int NOT NULL,
   `modeloInventario` int DEFAULT NULL,
+  `loteOptimo` float DEFAULT NULL,
+  `puntoPedido` float DEFAULT NULL,
+  `stockSeguridad` float DEFAULT NULL,
   PRIMARY KEY (`codArticulo`),
   KEY `fk_tipoArticulo_idx` (`codigoTipoArticulo`),
   KEY `fk_modeloInventario_idx` (`modeloInventario`),
@@ -45,7 +48,7 @@ CREATE TABLE `articulo` (
 
 LOCK TABLES `articulo` WRITE;
 /*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
-INSERT INTO `articulo` VALUES ('patito',1,1000,20,NULL,NULL,3,NULL);
+INSERT INTO `articulo` VALUES ('Juan',1,44,50,44,33,1,1,0,0,4.35226),('Pedro',2,44,37,44,33,1,2,NULL,NULL,NULL),('Jorge',3,44,55,44,33,1,1,0,0,0),('Leo',4,34,43,22,11,2,2,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `articulo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,33 +102,8 @@ CREATE TABLE `demanda` (
 
 LOCK TABLES `demanda` WRITE;
 /*!40000 ALTER TABLE `demanda` DISABLE KEYS */;
+INSERT INTO `demanda` VALUES (1,2024,40,1,'Enero',1),(2,2024,50,2,'Febrero',1),(3,2024,45,3,'Marzo',1),(4,2024,70,4,'Abril',1),(5,2024,55,5,'Mayo',1),(6,2024,53,6,'Junio',1),(7,2024,36,7,'Julio',1),(8,2024,15,8,'Agosto',1),(9,2024,50,9,'Septiembre',1),(10,2024,51,10,'Octubre',1),(11,2024,60,11,'Noviembre',1),(12,2024,90,12,'Diciembre',1);
 /*!40000 ALTER TABLE `demanda` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `detalleordencompra`
---
-
-DROP TABLE IF EXISTS `detalleordencompra`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `detalleordencompra` (
-  `numDetalleOrdenCompra` int NOT NULL,
-  `cantArticulosDOC` int DEFAULT NULL,
-  `codArticulo` int NOT NULL,
-  PRIMARY KEY (`numDetalleOrdenCompra`),
-  KEY `fk_codArticulo_idx` (`codArticulo`),
-  CONSTRAINT `fk_Articulo` FOREIGN KEY (`codArticulo`) REFERENCES `articulo` (`codArticulo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `detalleordencompra`
---
-
-LOCK TABLES `detalleordencompra` WRITE;
-/*!40000 ALTER TABLE `detalleordencompra` DISABLE KEYS */;
-/*!40000 ALTER TABLE `detalleordencompra` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -239,7 +217,7 @@ CREATE TABLE `proveedor` (
 
 LOCK TABLES `proveedor` WRITE;
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
-INSERT INTO `proveedor` VALUES ('Mateo',1,292034,1,2);
+INSERT INTO `proveedor` VALUES ('Jorge',1,2944324,1,7);
 /*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,13 +254,13 @@ DROP TABLE IF EXISTS `venta`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `venta` (
   `fechaVenta` date NOT NULL,
-  `numVenta` int NOT NULL,
+  `numVenta` int NOT NULL AUTO_INCREMENT,
   `cantidad` int NOT NULL,
   `codArticulo` int NOT NULL,
   PRIMARY KEY (`numVenta`),
   KEY `codArticulo_idx` (`codArticulo`),
   CONSTRAINT `codArticulo` FOREIGN KEY (`codArticulo`) REFERENCES `articulo` (`codArticulo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,6 +269,7 @@ CREATE TABLE `venta` (
 
 LOCK TABLES `venta` WRITE;
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
+INSERT INTO `venta` VALUES ('2024-06-26',1,10,4),('2024-06-26',3,2,2),('2024-06-26',4,1,2),('2024-06-26',5,1,2),('2024-06-26',6,3,2),('2024-06-26',7,1,1);
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -303,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-25 17:14:20
+-- Dump completed on 2024-06-26 14:57:06
