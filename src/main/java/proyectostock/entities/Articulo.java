@@ -25,12 +25,18 @@ public class Articulo {
     private String nombreArticulo;
     private int codArticulo;
     private float costoUnidadArticulo;
-    private int loteOptimoArticulo;
-    private int stockSeguridadArticulo;
     private int stockActualArticulo;
-    private int puntoPedidoArticulo;
+    private int costoPedidoArticulo;
     private float costoAlmacenimientoArticulo;
     private TipoArticulo tipoArticulo;
+
+    public int getCostoPedidoArticulo() {
+        return costoPedidoArticulo;
+    }
+
+    public void setCostoPedidoArticulo(int costoPedidoArticulo) {
+        this.costoPedidoArticulo = costoPedidoArticulo;
+    }
 
     public String getNombreArticulo() {
         return nombreArticulo;
@@ -56,36 +62,12 @@ public class Articulo {
         this.costoUnidadArticulo = costoUnidadArticulo;
     }
 
-    public int getLoteOptimoArticulo() {
-        return loteOptimoArticulo;
-    }
-
-    public void setLoteOptimoArticulo(int loteOptimoArticulo) {
-        this.loteOptimoArticulo = loteOptimoArticulo;
-    }
-
-    public int getStockSeguridadArticulo() {
-        return stockSeguridadArticulo;
-    }
-
-    public void setStockSeguridadArticulo(int stockSeguridadArticulo) {
-        this.stockSeguridadArticulo = stockSeguridadArticulo;
-    }
-
     public int getStockActualArticulo() {
         return stockActualArticulo;
     }
 
     public void setStockActualArticulo(int stockActualArticulo) {
         this.stockActualArticulo = stockActualArticulo;
-    }
-
-    public int getPuntoPedidoArticulo() {
-        return puntoPedidoArticulo;
-    }
-
-    public void setPuntoPedidoArticulo(int puntoPedidoArticulo) {
-        this.puntoPedidoArticulo = puntoPedidoArticulo;
     }
 
     public float getCostoAlmacenimientoArticulo() {
@@ -96,25 +78,20 @@ public class Articulo {
         this.costoAlmacenimientoArticulo = costoAlmacenimientoArticulo;
     }
 
-  //  public void setTipoArticulo(TipoArticulo tipoArticulo) {
-  //      this.tipoArticulo = tipoArticulo;
-  //  }
-
     
     public void AgregarArticulo(JTextField paramNombre,JTextField paramCod, 
-                                JTextField paramCosto, JTextField paramStockS, JTextField paramStockA, JTextField paramPuntoP, 
-                                JTextField paramCostoA, JTextField idTipoArticulo){
+                                JTextField paramCosto, JTextField paramStockA, JTextField paramCostoP, 
+                                JTextField paramCostoA, JTextField idTipoArticulo, JTextField idModelo){
         setNombreArticulo(paramNombre.getText());
         setCodArticulo(Integer.parseInt(paramCod.getText()));
-        setCostoUnidadArticulo(Float.parseFloat(paramCosto.getText()));  
-        setStockSeguridadArticulo(Integer.parseInt(paramStockS.getText()));  
+        setCostoUnidadArticulo(Float.parseFloat(paramCosto.getText()));   
         setStockActualArticulo(Integer.parseInt(paramStockA.getText()));  
-        setPuntoPedidoArticulo(Integer.parseInt(paramPuntoP.getText()));  
+        setCostoPedidoArticulo(Integer.parseInt(paramCostoP.getText()));  
         setCostoAlmacenimientoArticulo(Float.parseFloat(paramCostoA.getText()));
-        //Falta el TipoArticulo
+
         BaseRepository baseRepository = new BaseRepository();
         
-        String consulta = "insert into Articulo (nombreArticulo, codArticulo, costoUnidadArticulo, stockSeguridadArticulo, stockActualArticulo, puntoPedidoArticulo, costoAlmacenimientoArticulo, codigoTipoArticulo) values (?,?,?,?,?,?,?,?)";
+        String consulta = "insert into Articulo (nombreArticulo, codArticulo, costoUnidadArticulo, stockActualArticulo, costoPedidoArticulo, costoAlmacenimientoArticulo, codigoTipoArticulo, modeloInventario) values (?,?,?,?,?,?,?,?)";
         
         try {
             
@@ -122,11 +99,11 @@ public class Articulo {
             cs.setString(1, getNombreArticulo());
             cs.setInt(2, getCodArticulo());
             cs.setFloat(3, getCostoUnidadArticulo());   
-            cs.setInt(4, getStockSeguridadArticulo()); 
-            cs.setInt(5, getStockActualArticulo());       
-            cs.setInt(6, getPuntoPedidoArticulo());  
-            cs.setFloat(7, getCostoAlmacenimientoArticulo());  
-            cs.setString(8, idTipoArticulo.getText());
+            cs.setInt(4, getStockActualArticulo());       
+            cs.setInt(5, getCostoPedidoArticulo());  
+            cs.setFloat(6, getCostoAlmacenimientoArticulo());  
+            cs.setString(7, idTipoArticulo.getText());
+            cs.setString(8, idModelo.getText());
             cs.execute();
             
             
@@ -149,17 +126,19 @@ public class Articulo {
       
       modelo.addColumn("Nombre");
       modelo.addColumn("Código");
-      modelo.addColumn("CostoUnidad");
-      modelo.addColumn("StockSeguridad");  
+      modelo.addColumn("CostoUnidad"); 
       modelo.addColumn("StockActual");
-      modelo.addColumn("PuntoPedido");
+      modelo.addColumn("CostoPedido");
       modelo.addColumn("CostoAlmacenimiento");
       modelo.addColumn("TipoArticulo");
+      modelo.addColumn("ModeloInventario");
       
       paramTablaTotalArticulos.setModel(modelo);
       
-      sql = "SELECT articulo.nombreArticulo, articulo.codArticulo, articulo.costoUnidadArticulo, articulo.stockSeguridadArticulo, articulo.stockActualArticulo, articulo.puntoPedidoArticulo, articulo.costoAlmacenimientoArticulo, tipoarticulo.nombreTipoArticulo\n" +
-      "FROM articulo INNER JOIN tipoarticulo ON articulo.codigoTipoArticulo = tipoarticulo.codigoTipoArticulo;";
+sql = "SELECT articulo.nombreArticulo, articulo.codArticulo, articulo.costoUnidadArticulo, articulo.stockActualArticulo, articulo.costoPedidoArticulo, articulo.costoAlmacenimientoArticulo, tipoarticulo.nombreTipoArticulo, articulomodelo.nombreArticuloModelo\n" +
+"FROM articulo \n" +
+"INNER JOIN tipoarticulo ON articulo.codigoTipoArticulo = tipoarticulo.codigoTipoArticulo\n" +
+"INNER JOIN articulomodelo ON articulo.modeloInventario = articulomodelo.codArticuloModelo;";
       
       String[] datos = new String[8];
       Statement st;
@@ -177,7 +156,7 @@ public class Articulo {
               datos[5]=rs.getString(6); 
               datos[6]=rs.getString(7);   
               datos[7]=rs.getString(8);   
-          
+              
              modelo.addRow(datos);
           } 
           
@@ -191,7 +170,7 @@ public class Articulo {
  
   }
   
-    public void SeleccionarArticulo(JTable paramTablaArticulos, JTextField paramNombre,JTextField paramCod, JTextField paramCosto, JTextField paramStockS, JTextField paramStockA, JTextField paramPuntoP, JTextField paramCostoA){
+    public void SeleccionarArticulo(JTable paramTablaArticulos, JTextField paramNombre,JTextField paramCod, JTextField paramCosto, JTextField paramStockA, JTextField paramCostoP, JTextField paramCostoA){
         
         try {
             int fila = paramTablaArticulos.getSelectedRow();
@@ -200,11 +179,9 @@ public class Articulo {
                 paramNombre.setText(paramTablaArticulos.getValueAt(fila, 0).toString());
                 paramCod.setText(paramTablaArticulos.getValueAt(fila, 1).toString());
                 paramCosto.setText(paramTablaArticulos.getValueAt(fila, 2).toString());
-                paramStockS.setText(paramTablaArticulos.getValueAt(fila, 3).toString());
-                paramStockA.setText(paramTablaArticulos.getValueAt(fila, 4).toString());
-                paramPuntoP.setText(paramTablaArticulos.getValueAt(fila, 5).toString());
-                paramCostoA.setText(paramTablaArticulos.getValueAt(fila, 6).toString());
-                //Falta el TipoArticulo
+                paramStockA.setText(paramTablaArticulos.getValueAt(fila, 3).toString());
+                paramCostoP.setText(paramTablaArticulos.getValueAt(fila, 4).toString());
+                paramCostoA.setText(paramTablaArticulos.getValueAt(fila, 5).toString());
             }
             else 
             {
@@ -216,17 +193,16 @@ public class Articulo {
         
     }
     
-    public void ModificarArticulos(JTextField paramNombre,JTextField paramCod, JTextField paramCosto, JTextField paramStockS, JTextField paramStockA, JTextField paramPuntoP, JTextField paramCostoA, JTextField idTipoArticulo){
+    public void ModificarArticulos(JTextField paramNombre,JTextField paramCod, JTextField paramCosto, JTextField paramStockA, JTextField paramCostoP, JTextField paramCostoA, JTextField idTipoArticulo, JTextField idModelo){
         setNombreArticulo(paramNombre.getText());
         setCodArticulo(Integer.parseInt(paramCod.getText()));
         setCostoUnidadArticulo(Float.parseFloat(paramCosto.getText()));  
-        setStockSeguridadArticulo(Integer.parseInt(paramStockS.getText()));  
         setStockActualArticulo(Integer.parseInt(paramStockA.getText()));  
-        setPuntoPedidoArticulo(Integer.parseInt(paramPuntoP.getText()));  
+        setCostoPedidoArticulo(Integer.parseInt(paramCostoP.getText()));  
         setCostoAlmacenimientoArticulo(Float.parseFloat(paramCostoA.getText()));
         BaseRepository baseRepository = new BaseRepository();
-        //Falta el TipoArticulo
-        String consulta = "UPDATE Articulo set articulo.nombreArticulo = ?, articulo.codArticulo = ?, articulo.costoUnidadArticulo = ?, articulo.stockSeguridadArticulo = ?, articulo.stockActualArticulo = ?, articulo.puntoPedidoArticulo = ?, articulo.costoAlmacenimientoArticulo = ?, articulo.codigoTipoArticulo = ?;";
+
+        String consulta = "UPDATE Articulo set articulo.nombreArticulo = ?, articulo.codArticulo = ?, articulo.costoUnidadArticulo = ?, articulo.stockActualArticulo = ?, articulo.costoPedidoArticulo = ?, articulo.costoAlmacenimientoArticulo = ?, articulo.codigoTipoArticulo = ?, articulo.modeloInventario = ?;";
         
         try {
             
@@ -234,12 +210,12 @@ public class Articulo {
             
             cs.setString(1, getNombreArticulo());
             cs.setInt(2, getCodArticulo());
-            cs.setFloat(3, getCostoUnidadArticulo());   
-            cs.setInt(4, getStockSeguridadArticulo()); 
-            cs.setInt(5, getStockActualArticulo());       
-            cs.setInt(6, getPuntoPedidoArticulo());  
-            cs.setFloat(7, getCostoAlmacenimientoArticulo());  
-            cs.setString(8, idTipoArticulo.getText());
+            cs.setFloat(3, getCostoUnidadArticulo());    
+            cs.setInt(4, getStockActualArticulo());       
+            cs.setInt(5, getCostoPedidoArticulo());  
+            cs.setFloat(6, getCostoAlmacenimientoArticulo());  
+            cs.setString(7, idTipoArticulo.getText());
+            cs.setString(8, idModelo.getText());
             cs.execute();
             
             JOptionPane.showMessageDialog(null, "Se ha modificado con éxito.");
@@ -290,4 +266,5 @@ public class Articulo {
            JOptionPane.showMessageDialog(null, "Error:" +e.toString());
       }
         }
+       
 }

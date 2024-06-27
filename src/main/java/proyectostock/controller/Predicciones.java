@@ -1,8 +1,12 @@
 
 package proyectostock.controller;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -196,8 +200,8 @@ public class Predicciones {
       }
       
  
-  } public void CalcularPromedioMovilPonderado(JTextField paramCantMeses, JTextField paramIdArticulo, JTextField param1, JTextField param2, JTextField param3, JTextField param4, JTextField param5, JTextField param6, JTextField param7, JTextField param8, JTextField param9, JTextField param10, JTextField param11, JTextField param12, JTextField param13, JTextField paramResultado){
-      
+  } public void CalcularPromedioMovilPonderado(JTextField paramCantMeses, JTextField paramIdArticulo, JTextField param1, JTextField param2, JTextField param3, JTextField param4, JTextField param5, JTextField param6, JTextField param7, JTextField param8, JTextField param9, JTextField param10, JTextField param11, JTextField param12, JTextField param13, JTextField paramResultado, JTextField txterror){
+        setCodArticulo(Integer.parseInt(paramIdArticulo.getText()));
         try {
         int cantMeses = Integer.parseInt(paramCantMeses.getText());
         int codArticulo = Integer.parseInt(paramIdArticulo.getText());
@@ -227,25 +231,55 @@ public class Predicciones {
         
     double totalSum = 0;
     int index = 0;
+    List<Double> demandasReales = new ArrayList<>();
+                // Obtener demandas reales
+            while (rs.next()) {
+                double cantidad = rs.getDouble("cantidad");
+                demandasReales.add(cantidad);
+            }
+                // Calcular el total ponderado
+            for (int i = 0; i < demandasReales.size() && index < params.length; i++) {
+                double cantidad = demandasReales.get(i);
+                double paramValue = params[index];
+                totalSum += cantidad * paramValue;
+                index++;
+            }
     
-            while (rs.next() && index < params.length) {
-            int numeroDemanda = rs.getInt("numeroDemanda");
-            double cantidad = rs.getDouble("cantidad");
-            double paramValue = params[index];
-            totalSum += cantidad * paramValue;
-            index++;
-        }
-
+    
+            // Calcular el total ponderado
+            for (int i = 0; i < demandasReales.size() && index < params.length; i++) {
+                double cantidad = demandasReales.get(i);
+                double paramValue = params[index];
+                totalSum += cantidad * paramValue;
+                index++;
+            }
+            
         double resultado = totalSum / cantMeses;
         paramResultado.setText(String.valueOf(resultado));
-// Cerrar recursos
+        
+            // Calcular el MAPE
+            double sumaErrores = 0.0;
+            for (int i = 0; i < demandasReales.size() && i < params.length; i++) {
+                double demandaReal = demandasReales.get(i);
+                double errorAbsoluto = Math.abs(demandaReal - (params[i] * resultado));
+                double errorPorcentual = errorAbsoluto / demandaReal * 100;
+                sumaErrores += errorPorcentual;
+            }
+            double mape = sumaErrores / demandasReales.size();
+            txterror.setText(String.valueOf(mape));
+            
+        // Guardar en la tabla prediccioneshistoricas
+        String modeloPrediccion = "Promedio móvil Ponderado";
+        guardarPrediccionHistorica(getCodArticulo(), modeloPrediccion, mape, resultado);
+            
+        // Cerrar recursos
         rs.close();
         stmt.close();
         conn.close();
     } catch (Exception e) {
         e.printStackTrace();
         paramResultado.setText("Error");
-        
+        txterror.setText("Error al calcular el MAPE");
   }
  }
   
@@ -281,9 +315,11 @@ public void obtenerUltimaCantidad(JTextField paramCodArticulo, JTextField paramU
         paramUltimaCantidad.setText("Error al obtener la cantidad");
     }
    }
-public void CalcularPMSuavizadoExponencialmente(JTextField paramUltimaCantidad, JTextField paramDemandaEsperada, JTextField paramAlfa, JTextField paramResultadoPMSuavizado) {
+public void CalcularPMSuavizadoExponencialmente(JTextField paramIdArticulo, JTextField paramUltimaCantidad, JTextField paramDemandaEsperada, JTextField paramAlfa, JTextField paramResultadoPMSuavizado, JTextField txterror) {
+        setCodArticulo(Integer.parseInt(paramIdArticulo.getText()));
     try {
         // Obtener los valores de los JTextFields
+
         double ultimaCantidad = Double.parseDouble(paramUltimaCantidad.getText());
         double demandaEsperada = Double.parseDouble(paramDemandaEsperada.getText());
         double alfa = Double.parseDouble(paramAlfa.getText());
@@ -297,18 +333,159 @@ public void CalcularPMSuavizadoExponencialmente(JTextField paramUltimaCantidad, 
         // Calcular el Promedio Movil Suavizado Exponencialmente (PMSuavizado)
         double pmsuavizado = alfa * ultimaCantidad + (1 - alfa) * demandaEsperada;
 
-        // Mostrar el resultado en el JTextField correspondiente
-        paramResultadoPMSuavizado.setText(String.valueOf(pmsuavizado));
-    } catch (NumberFormatException e) {
-        e.printStackTrace();
-        paramResultadoPMSuavizado.setText("Error en el formato de los datos");
+            // Mostrar el resultado en el JTextField correspondiente
+            paramResultadoPMSuavizado.setText(String.valueOf(pmsuavizado));
+
+            // Calcular el MAPE
+            double errorAbsoluto = Math.abs(ultimaCantidad - pmsuavizado);
+            double errorPorcentual = errorAbsoluto / ultimaCantidad * 100;
+            txterror.setText(String.valueOf(errorPorcentual));
+        
+            // Guardar en la tabla prediccioneshistoricas
+            String modeloPrediccion = "PM Suavizado Exponencialmente";
+            guardarPrediccionHistorica(getCodArticulo(), modeloPrediccion, errorPorcentual, pmsuavizado);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            paramResultadoPMSuavizado.setText("Error en el formato de los datos");
+            txterror.setText("Error en el formato de los datos");
+        } catch (Exception e) {
+            e.printStackTrace();
+            paramResultadoPMSuavizado.setText("Error al calcular el PMSuavizado");
+            txterror.setText("Error al calcular el MAPE");
+        }
+    }
+
+public void guardarPrediccionHistorica(int codArticulo, String modeloPrediccion, double error, double resultadoDemanda) {
+    try {
+        BaseRepository baseRepository = new BaseRepository();
+        Connection conn = baseRepository.estableceConexion();
+        Statement stmt = conn.createStatement();
+
+        // Consulta SQL para insertar en la tabla prediccioneshistoricas
+        String sql = "INSERT INTO prediccioneshistoricas (Articulo, ModeloPrediccion, Error, resultadoDemanda) " +
+                     "VALUES (" + codArticulo + ", '" + modeloPrediccion + "', " + error + ", " + resultadoDemanda + ");";
+
+        // Ejecutar la inserción
+        int rowsAffected = stmt.executeUpdate(sql);
+
+        if (rowsAffected == 1) {
+            System.out.println("Registro insertado en prediccioneshistoricas.");
+        } else {
+            System.out.println("No se pudo insertar el registro en prediccioneshistoricas.");
+        }
+
+        stmt.close();
+        conn.close();
     } catch (Exception e) {
         e.printStackTrace();
-        paramResultadoPMSuavizado.setText("Error al calcular el PMSuavizado");
+        System.err.println("Error al intentar guardar la predicción histórica.");
     }
 }
 
+public void MostrarMejorModelo(JComboBox<String> jComboArticulo, JTextField txtcodigoArticulo, JTable tbTotalDemandas, JTextField txtresultado, JTextField txtresultadoDemanda) {
+    try {
+        // Obtener el nombre del artículo seleccionado del JComboBox
+        String nombreArticulo = jComboArticulo.getSelectedItem().toString();
 
+        // Verificar si se seleccionó un artículo válido
+        if (nombreArticulo.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un artículo válido.");
+            return;
+        }
 
-} 
+        // Obtener el código del artículo seleccionado
+        int codArticulo = Integer.parseInt(txtcodigoArticulo.getText());
+
+        // Consulta SQL para obtener las últimas 2 predicciones históricas para el artículo seleccionado
+        String sql = "SELECT numPrediccionHistorica, Articulo, ModeloPrediccion, Error, ResultadoDemanda " +
+                     "FROM PrediccionesHistoricas " +
+                     "WHERE Articulo = " + codArticulo + " " +
+                     "ORDER BY numPrediccionHistorica DESC " +
+                     "LIMIT 2;";
+
+        BaseRepository baseRepository = new BaseRepository();
+        Connection conn = baseRepository.estableceConexion();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+
+        // Crear un modelo de tabla para almacenar los resultados
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Núm. Predicción");
+        modelo.addColumn("Artículo");
+        modelo.addColumn("Modelo de Predicción");
+        modelo.addColumn("Error");
+        modelo.addColumn("Resultado Demanda"); // Nueva columna agregada
+
+        // Llenar el modelo con los resultados de la consulta
+        while (rs.next()) {
+            int numPrediccion = rs.getInt("numPrediccionHistorica");
+            int articulo = rs.getInt("Articulo");
+            String modeloPrediccion = rs.getString("ModeloPrediccion");
+            int error = rs.getInt("Error");
+            double resultadoDemanda = rs.getDouble("ResultadoDemanda");
+
+            // Agregar fila al modelo de la tabla
+            modelo.addRow(new Object[]{numPrediccion, articulo, modeloPrediccion, error, resultadoDemanda});
+        }
+
+        // Establecer el modelo en la tabla tbTotalDemandas
+        tbTotalDemandas.setModel(modelo);
+
+        // Determinar el mejor modelo basado en el menor error de las últimas 2 predicciones
+        if (tbTotalDemandas.getRowCount() >= 2) {
+            int menorError = Integer.MAX_VALUE;
+            String mejorModelo = "";
+            int mejorError = 0;
+            double mejorResultadoDemanda = 0.0;
+
+            for (int i = 0; i < 2; i++) {
+                int errorActual = (int) tbTotalDemandas.getValueAt(i, 3); // Columna de Error
+                String modeloActual = (String) tbTotalDemandas.getValueAt(i, 2); // Columna de ModeloPrediccion
+                double resultadoDemandaActual = (double) tbTotalDemandas.getValueAt(i, 4); // Columna de ResultadoDemanda
+
+                if (errorActual < menorError) {
+                    menorError = errorActual;
+                    mejorModelo = modeloActual;
+                    mejorError = errorActual;
+                    mejorResultadoDemanda = resultadoDemandaActual;
+                }
+            }
+
+            // Mostrar el mejor modelo, su error y resultado de demanda en los JTextField correspondientes
+            txtresultado.setText(mejorModelo);
+            txtresultadoDemanda.setText(String.valueOf(mejorResultadoDemanda));
+        }
+
+        // Cerrar recursos
+        rs.close();
+        stmt.close();
+        conn.close();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al consultar las predicciones históricas: " + e.getMessage());
+    }
+}
+        public void MostrarCodigoArticulo(JComboBox articuloCombo, JTextField idArticulo){
+        
+        String consulta = "SELECT articulo.codArticulo FROM articulo WHERE articulo.nombreArticulo = ?";
+        BaseRepository baseRepository = new BaseRepository();
+        
+        try {
+          CallableStatement cs = baseRepository.estableceConexion().prepareCall(consulta);
+          cs.setString(1, articuloCombo.getSelectedItem().toString());
+          cs.execute();
+          
+          ResultSet rs = cs.executeQuery();
+          
+          if(rs.next()){
+              idArticulo.setText(rs.getString("codArticulo"));
+          }
+          
+          } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, "Error:" +e.toString());
+      }
+        }
+}
 

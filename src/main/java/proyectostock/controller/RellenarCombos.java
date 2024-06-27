@@ -31,5 +31,39 @@ public class RellenarCombos {
            JOptionPane.showMessageDialog(null, "Error:" +e.toString());
       }
     }
+     // Para el repo
+        public void RellenarComboLoteFijo(String tabla, String valor, JComboBox combo){
+        String sql = "SELECT * FROM " + tabla + " WHERE modeloInventario = 1";
+
+        Statement st;
+        BaseRepository baseRepository = new BaseRepository();
+        
+        try {
+          st = baseRepository.estableceConexion().createStatement();
+          ResultSet rs = st.executeQuery(sql);
+          while(rs.next()){
+              combo.addItem(rs.getString(valor));
+          }
+      } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, "Error:" +e.toString());
+      }
+    }
+        // Para el repo
+        public void RellenarComboIntervaloFijo(String tabla, String valor, JComboBox combo){
+        String sql = "SELECT * FROM " + tabla + " WHERE modeloInventario = 2";
+
+        Statement st;
+        BaseRepository baseRepository = new BaseRepository();
+        
+        try {
+          st = baseRepository.estableceConexion().createStatement();
+          ResultSet rs = st.executeQuery(sql);
+          while(rs.next()){
+              combo.addItem(rs.getString(valor));
+          }
+      } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, "Error:" +e.toString());
+      }
+    }
     
 }

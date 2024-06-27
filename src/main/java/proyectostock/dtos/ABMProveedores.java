@@ -78,12 +78,12 @@ public class ABMProveedores extends javax.swing.JFrame {
 
         jLabel4.setText("Nombre:");
 
-        jLabel5.setText("num Celular:");
+        jLabel5.setText("Número de celular:");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("Añadir nuevo Proveedor: ");
+        jLabel1.setText("Añadir nuevo Proveedor ");
 
-        jLabel2.setText("tipo de artículo:");
+        jLabel2.setText("Tipo de artículo:");
 
         jComboTipoArticulo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -103,9 +103,9 @@ public class ABMProveedores extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("tiempo de demora:");
+        jLabel3.setText("Tiempo de demora:");
 
-        jLabel6.setText("código Proveedor:");
+        jLabel6.setText("Código:");
 
         txtcodigoTipoArticulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,9 +153,9 @@ public class ABMProveedores extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
                                     .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel4))
+                                    .addComponent(jLabel6))
                                 .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -180,7 +180,7 @@ public class ABMProveedores extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

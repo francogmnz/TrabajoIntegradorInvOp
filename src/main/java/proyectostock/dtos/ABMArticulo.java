@@ -23,7 +23,9 @@ public class ABMArticulo extends javax.swing.JFrame {
         Articulo objetoArticulo = new Articulo();
         objetoArticulo.MostrarArticulos(tbTotalArticulos);
         re.RellenarComboBox("tipoarticulo", "nombreTipoArticulo", jComboTipoArticulo);
+        re.RellenarComboBox("articulomodelo", "nombreArticuloModelo", jComboInventario);
         txtcodigoTipoArticulo.setVisible(false);
+        txtcodigoInventario.setVisible(false);
     }
 
     /**
@@ -39,23 +41,24 @@ public class ABMArticulo extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtnombreArticulo = new javax.swing.JTextField();
         txtcodArticulo = new javax.swing.JTextField();
         txtcostoUnidadArticulo = new javax.swing.JTextField();
-        txtstockSeguridadArticulo = new javax.swing.JTextField();
         txtstockActual = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtpuntoPedido = new javax.swing.JTextField();
+        txtcostoPedido = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtcostoAlmacenimiento = new javax.swing.JTextField();
         jComboTipoArticulo = new javax.swing.JComboBox<>();
         txtcodigoTipoArticulo = new javax.swing.JTextField();
+        jComboInventario = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        txtcodigoInventario = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbTotalArticulos = new javax.swing.JTable();
@@ -67,13 +70,11 @@ public class ABMArticulo extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre");
 
-        jLabel2.setText("Cod");
+        jLabel2.setText("Código");
 
-        jLabel3.setText("CostoUnidad");
+        jLabel3.setText("Costo por Unidad");
 
-        jLabel5.setText("StockSeguridad");
-
-        jLabel6.setText("StockActual");
+        jLabel6.setText("Stock Actual");
 
         txtnombreArticulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,9 +105,9 @@ public class ABMArticulo extends javax.swing.JFrame {
 
         jLabel7.setText("Tipo");
 
-        jLabel8.setText("CostoAlmacen");
+        jLabel8.setText("Costo Almacenim.");
 
-        jLabel9.setText("PuntoPedido");
+        jLabel9.setText("Costo Pedido");
 
         jComboTipoArticulo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -125,6 +126,14 @@ public class ABMArticulo extends javax.swing.JFrame {
             }
         });
 
+        jComboInventario.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboInventarioItemStateChanged(evt);
+            }
+        });
+
+        jLabel5.setText("Inventario");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -134,38 +143,33 @@ public class ABMArticulo extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtcodigoTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtcostoAlmacenimiento)
-                            .addComponent(jComboTipoArticulo, 0, 118, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtpuntoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                            .addComponent(txtstockActual)
-                            .addComponent(txtstockSeguridadArticulo)))
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtcodigoTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtcodigoInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtcodArticulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                            .addComponent(txtnombreArticulo)
-                            .addComponent(txtcostoUnidadArticulo))))
+                            .addComponent(jComboInventario, javax.swing.GroupLayout.Alignment.TRAILING, 0, 132, Short.MAX_VALUE)
+                            .addComponent(jComboTipoArticulo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtcostoAlmacenimiento)
+                            .addComponent(txtcostoPedido)
+                            .addComponent(txtstockActual)
+                            .addComponent(txtnombreArticulo, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtcodArticulo, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtcostoUnidadArticulo, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -185,16 +189,12 @@ public class ABMArticulo extends javax.swing.JFrame {
                     .addComponent(txtcostoUnidadArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtstockSeguridadArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtstockActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(txtpuntoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcostoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -202,13 +202,18 @@ public class ABMArticulo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtcodigoTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcodigoTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtcodigoInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -267,7 +272,7 @@ public class ABMArticulo extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -277,7 +282,7 @@ public class ABMArticulo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -293,19 +298,19 @@ public class ABMArticulo extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
       
         Articulo objetoArticulo = new Articulo();
-        objetoArticulo.AgregarArticulo(txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockSeguridadArticulo, txtstockActual, txtpuntoPedido, txtcostoAlmacenimiento, txtcodigoTipoArticulo);
+        objetoArticulo.AgregarArticulo(txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockActual, txtcostoPedido, txtcostoAlmacenimiento, txtcodigoTipoArticulo, txtcodigoInventario);
         objetoArticulo.MostrarArticulos(tbTotalArticulos);
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tbTotalArticulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTotalArticulosMouseClicked
         Articulo objetoArticulo = new Articulo();
-        objetoArticulo.SeleccionarArticulo(tbTotalArticulos, txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockSeguridadArticulo, txtstockActual, txtpuntoPedido, txtcostoAlmacenimiento);
+        objetoArticulo.SeleccionarArticulo(tbTotalArticulos, txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockActual, txtcostoPedido, txtcostoAlmacenimiento);
     }//GEN-LAST:event_tbTotalArticulosMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         Articulo objetoArticulo = new Articulo();
-        objetoArticulo.ModificarArticulos(txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockSeguridadArticulo, txtstockActual, txtpuntoPedido, txtcostoAlmacenimiento, txtcodigoTipoArticulo);
+        objetoArticulo.ModificarArticulos(txtnombreArticulo, txtcodArticulo, txtcostoUnidadArticulo, txtstockActual, txtcostoPedido, txtcostoAlmacenimiento, txtcodigoTipoArticulo, txtcodigoInventario);
         objetoArticulo.MostrarArticulos(tbTotalArticulos);
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -332,6 +337,11 @@ public class ABMArticulo extends javax.swing.JFrame {
     private void txtcodigoTipoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoTipoArticuloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcodigoTipoArticuloActionPerformed
+
+    private void jComboInventarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboInventarioItemStateChanged
+    ArticuloModelo objetoArticuloModelo = new ArticuloModelo();
+    objetoArticuloModelo.MostrarCodigoPorModeloInventario(jComboInventario, txtcodigoInventario);
+    }//GEN-LAST:event_jComboInventarioItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -373,6 +383,7 @@ public class ABMArticulo extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton jButtonCerrar;
+    private javax.swing.JComboBox<String> jComboInventario;
     private javax.swing.JComboBox<String> jComboTipoArticulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -387,13 +398,13 @@ public class ABMArticulo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbTotalArticulos;
     private javax.swing.JTextField txtcodArticulo;
+    private javax.swing.JTextField txtcodigoInventario;
     private javax.swing.JTextField txtcodigoTipoArticulo;
     private javax.swing.JTextField txtcostoAlmacenimiento;
+    private javax.swing.JTextField txtcostoPedido;
     private javax.swing.JTextField txtcostoUnidadArticulo;
     private javax.swing.JTextField txtnombreArticulo;
-    private javax.swing.JTextField txtpuntoPedido;
     private javax.swing.JTextField txtstockActual;
-    private javax.swing.JTextField txtstockSeguridadArticulo;
     // End of variables declaration//GEN-END:variables
 
 

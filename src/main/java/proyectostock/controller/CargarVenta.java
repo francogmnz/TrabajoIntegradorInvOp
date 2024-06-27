@@ -3,7 +3,6 @@ package proyectostock.controller;
 
 import java.sql.CallableStatement;
 import java.sql.Date;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,39 +35,7 @@ public class CargarVenta {
             JOptionPane.showMessageDialog(null, "Error al obtener el stock del artículo: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    public void MostrarVentas(JTable paramTablaVentas) {
-        BaseRepository baseRepository = new BaseRepository();
-        DefaultTableModel modelo = new DefaultTableModel();
-        TableRowSorter<TableModel> ordenarTabla = new TableRowSorter<>(modelo);
-        paramTablaVentas.setRowSorter(ordenarTabla);
-
-        String sql = "SELECT fecha_venta, num_venta, cod_articulo, cantidad_vendida FROM ventas";
-
-        modelo.addColumn("Fecha de Venta");
-        modelo.addColumn("Número de Venta");
-        modelo.addColumn("Código de Artículo");
-        modelo.addColumn("Cantidad Vendida");
-
-        paramTablaVentas.setModel(modelo);
-
-        try (Statement st = baseRepository.estableceConexion().createStatement(); ResultSet rs = st.executeQuery(sql)) {
-
-            while (rs.next()) {
-                String fechaVenta = rs.getString("fecha_venta");
-                int numVenta = rs.getInt("num_venta");
-                int codArticulo = rs.getInt("cod_articulo");
-                int cantidadVendida = rs.getInt("cantidad_vendida");
-
-                Object[] fila = {fechaVenta, numVenta, codArticulo, cantidadVendida};
-                modelo.addRow(fila);
-            }
-
-            paramTablaVentas.setModel(modelo);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al mostrar las ventas: " + e.toString());
-        }
-    }
+   
     public void ActualizarVenta(JTextField paramNumVenta, JTextField paramFechaVenta, JTextField paramCodArticulo, JTextField paramCantidadVendida) {
         try {
             int numVenta = Integer.parseInt(paramNumVenta.getText());
@@ -95,5 +62,4 @@ public class CargarVenta {
     }
 
 }
-
 

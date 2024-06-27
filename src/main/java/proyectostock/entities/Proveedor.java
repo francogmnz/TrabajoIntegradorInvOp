@@ -74,14 +74,14 @@ public class Proveedor {
       modelo.addColumn("Nombre");
       modelo.addColumn("Código");
       modelo.addColumn("Celular");
-
+      modelo.addColumn("Días de demora");
       
       paramTablaProveedores.setModel(modelo);
       
-      sql = "SELECT proveedor.nombreProveedor, proveedor.codProveedor, proveedor.celular\n" +
+      sql = "SELECT proveedor.nombreProveedor, proveedor.codProveedor, proveedor.celular, proveedor.diasDemora\n" +
       "FROM proveedor;";
       
-      String[] datos = new String[8];
+      String[] datos = new String[4];
       Statement st;
       
       try {
@@ -92,7 +92,7 @@ public class Proveedor {
               datos[0]=rs.getString(1);
               datos[1]=rs.getString(2);
               datos[2]=rs.getString(3);
- 
+              datos[3]=rs.getString(4); 
           
              modelo.addRow(datos);
           } 
@@ -150,4 +150,25 @@ public class Proveedor {
             JOptionPane.showMessageDialog(null, "Error al mostrar código de artículo: " + e.toString());
         }
     }
+    
+        public void MostrarCodigoProveedor(JComboBox articuloCombo, JTextField idProveedor){
+        
+        String consulta = "SELECT proveedor.codProveedor FROM proveedor WHERE proveedor.nombreProveedor = ?";
+        BaseRepository baseRepository = new BaseRepository();
+        
+        try {
+          CallableStatement cs = baseRepository.estableceConexion().prepareCall(consulta);
+          cs.setString(1, articuloCombo.getSelectedItem().toString());
+          cs.execute();
+          
+          ResultSet rs = cs.executeQuery();
+          
+          if(rs.next()){
+              idProveedor.setText(rs.getString("codProveedor"));
+          }
+          
+          } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, "Error:" +e.toString());
+      }
+        }
 }
