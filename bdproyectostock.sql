@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: bdproyectostock
 -- ------------------------------------------------------
--- Server version	8.0.22
+-- Server version	8.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `articulo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `articulo` (
-  `nombreArticulo` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `nombreArticulo` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `codArticulo` int NOT NULL,
   `costoUnidadArticulo` float DEFAULT NULL,
   `stockActualArticulo` int DEFAULT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `articulo` (
 
 LOCK TABLES `articulo` WRITE;
 /*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
-INSERT INTO `articulo` VALUES ('Juan',1,44,75,44,33,1,1,1827.93,8771000,4.35226),('Pedro',2,44,40,44,33,1,2,0,4.35226,4.35226),('Jorge',3,44,55,44,33,1,1,0,0,60),('Leo',4,34,43,22,11,2,2,NULL,50,NULL);
+INSERT INTO `articulo` VALUES ('Campera Adidas',1,45000,498,40,5,1,2,NULL,NULL,NULL),('Campera Nike',2,40000,520,50,7,1,2,NULL,NULL,NULL),('Campera Topper',3,34000,450,35,5,1,2,NULL,NULL,NULL),('RipCurl',4,60000,300,60,5,2,2,NULL,NULL,NULL),('Volcom',5,55000,350,50,5,2,2,NULL,NULL,NULL),('Patito',6,1000,1000,30,1,3,2,NULL,NULL,NULL),('Mochila',7,20000,600,35,10,3,1,0,0,4.65276),('Boca',8,45000,200,40,7,4,1,NULL,NULL,NULL),('River',9,45000,200,40,7,4,1,NULL,NULL,NULL),('Tomba',10,37000,250,30,5,4,1,NULL,NULL,NULL),('Gorra Volcom',11,15000,50,10,3,5,1,NULL,NULL,NULL),('Gorra Vans',12,12000,50,10,2,5,1,NULL,NULL,NULL),('Zapatillas Puma',13,90000,200,50,10,6,1,NULL,NULL,NULL),('Zapatillas John Foos',14,80000,100,30,80,6,1,NULL,110,NULL),('Zapatilla DC',15,100000,20,5,12,6,1,NULL,NULL,22);
 /*!40000 ALTER TABLE `articulo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +88,7 @@ CREATE TABLE `demanda` (
   `anio` int DEFAULT NULL,
   `cantidad` int DEFAULT NULL,
   `mes` int NOT NULL,
-  `nombreMes` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `nombreMes` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `codArticulo` int DEFAULT NULL,
   PRIMARY KEY (`numeroDemanda`),
   KEY `fk_codArticulo_idx` (`codArticulo`),
@@ -102,7 +102,7 @@ CREATE TABLE `demanda` (
 
 LOCK TABLES `demanda` WRITE;
 /*!40000 ALTER TABLE `demanda` DISABLE KEYS */;
-INSERT INTO `demanda` VALUES (1,2024,12000,1,'Enero',1),(2,2024,18000,2,'Febrero',1),(3,2024,90000,3,'Marzo',1),(4,2024,130000,4,'Abril',1),(5,2024,190000,5,'Mayo',1),(6,2024,300000,6,'Junio',1),(7,2024,143000,7,'Julio',1),(8,2024,90000,8,'Agosto',1),(9,2024,70000,9,'Septiembre',1),(10,2024,40000,10,'Octubre',1),(11,2024,80000,11,'Noviembre',1),(12,2024,90000,12,'Diciembre',1),(13,2024,70000,1,'Enero',2),(14,2024,70000,2,'Febrero',2),(15,2024,70000,3,'Marzo',2),(16,2024,70000,4,'Abril',2),(17,2024,70000,5,'Mayo',2),(18,2024,70000,6,'Junio',2),(19,2024,70000,7,'Julio',2),(20,2024,70000,8,'Agosto',2),(21,2024,70000,9,'Septiembre',2),(22,2024,70000,10,'Octubre',2),(23,2024,70000,11,'Noviembre',2),(24,2024,70000,12,'Diciembre',2);
+INSERT INTO `demanda` VALUES (1,2023,700,6,'Junio',1),(2,2023,720,7,'Julio',1),(3,2023,750,8,'Agosto',1),(4,2023,650,9,'Septiembre',1),(5,2023,800,10,'Octubre',1),(6,2023,810,11,'Noviembre',1),(7,2023,1100,12,'Diciembre',1),(8,2024,700,1,'Enero',1),(9,2024,750,2,'Febrero',1),(10,2024,550,3,'Marzo',1),(11,2024,220,4,'Abril',1),(12,2024,300,5,'Mayo',1);
 /*!40000 ALTER TABLE `demanda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ DROP TABLE IF EXISTS `estadoordencompra`;
 CREATE TABLE `estadoordencompra` (
   `codEstadoOC` int NOT NULL,
   `fechaCambio` date DEFAULT NULL,
-  `nombreEstadoOC` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `nombreEstadoOC` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   PRIMARY KEY (`codEstadoOC`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -127,7 +127,7 @@ CREATE TABLE `estadoordencompra` (
 
 LOCK TABLES `estadoordencompra` WRITE;
 /*!40000 ALTER TABLE `estadoordencompra` DISABLE KEYS */;
-INSERT INTO `estadoordencompra` VALUES (1,'2024-06-23','Realizada');
+INSERT INTO `estadoordencompra` VALUES (1,'2024-06-23','Realizada'),(2,'2024-06-23','Aceptada'),(3,'2024-06-23','Rechazada');
 /*!40000 ALTER TABLE `estadoordencompra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,7 +161,7 @@ CREATE TABLE `ordencompra` (
 
 LOCK TABLES `ordencompra` WRITE;
 /*!40000 ALTER TABLE `ordencompra` DISABLE KEYS */;
-INSERT INTO `ordencompra` VALUES (1,'2024-03-01',1,1,1,30),(2,'2024-06-26',1,1,1,44),(3,'2024-06-26',1,1,1,3),(4,'2024-06-26',1,1,1,5);
+INSERT INTO `ordencompra` VALUES (1,'2024-06-28',1,2,1,100),(2,'2024-06-28',1,2,2,20);
 /*!40000 ALTER TABLE `ordencompra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +180,7 @@ CREATE TABLE `prediccioneshistoricas` (
   `resultadoDemanda` int DEFAULT NULL,
   PRIMARY KEY (`numPrediccionHistorica`),
   KEY `fk_codigodelarticuloo_idx` (`Articulo`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,7 +189,7 @@ CREATE TABLE `prediccioneshistoricas` (
 
 LOCK TABLES `prediccioneshistoricas` WRITE;
 /*!40000 ALTER TABLE `prediccioneshistoricas` DISABLE KEYS */;
-INSERT INTO `prediccioneshistoricas` VALUES (20,1,'Promedio móvil Ponderado',88,134),(21,1,'PM Suavizado Exponencialmente',10,460),(22,1,'Promedio móvil Ponderado',75,43000),(23,1,'PM Suavizado Exponencialmente',2,91500),(24,1,'Promedio móvil Ponderado',100,0),(25,1,'Promedio móvil Ponderado',100,0),(26,1,'Promedio móvil Ponderado',75,43000);
+INSERT INTO `prediccioneshistoricas` VALUES (20,1,'Promedio móvil Ponderado',88,134),(21,1,'PM Suavizado Exponencialmente',10,460),(22,1,'Promedio móvil Ponderado',85,119),(23,1,'PM Suavizado Exponencialmente',3,310),(24,1,'Promedio móvil Ponderado',88,100),(25,1,'PM Suavizado Exponencialmente',2,305);
 /*!40000 ALTER TABLE `prediccioneshistoricas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,7 +201,7 @@ DROP TABLE IF EXISTS `proveedor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `proveedor` (
-  `nombreProveedor` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `nombreProveedor` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `codProveedor` int NOT NULL,
   `celular` int DEFAULT NULL,
   `tipoArticuloId` int DEFAULT NULL,
@@ -218,7 +218,7 @@ CREATE TABLE `proveedor` (
 
 LOCK TABLES `proveedor` WRITE;
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
-INSERT INTO `proveedor` VALUES ('Jorge',1,2944324,1,7);
+INSERT INTO `proveedor` VALUES ('Juan',1,2492648,1,4),('Franco',2,3769567,2,6),('Verena',3,2739584,3,8),('Mateo',4,2308654,4,9),('Catalina',5,2648308,5,4),('Rosa',6,5323768,6,2);
 /*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,7 +231,7 @@ DROP TABLE IF EXISTS `tipoarticulo`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipoarticulo` (
   `codigoTipoArticulo` int NOT NULL,
-  `nombreTipoArticulo` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `nombreTipoArticulo` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   PRIMARY KEY (`codigoTipoArticulo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -242,7 +242,7 @@ CREATE TABLE `tipoarticulo` (
 
 LOCK TABLES `tipoarticulo` WRITE;
 /*!40000 ALTER TABLE `tipoarticulo` DISABLE KEYS */;
-INSERT INTO `tipoarticulo` VALUES (1,'Campera'),(2,'Buzos'),(3,'Accesorios'),(4,'Remeras');
+INSERT INTO `tipoarticulo` VALUES (1,'Campera'),(2,'Buzos'),(3,'Accesorios'),(4,'Remeras'),(5,'Gorras'),(6,'Zapatillas');
 /*!40000 ALTER TABLE `tipoarticulo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,7 +270,7 @@ CREATE TABLE `venta` (
 
 LOCK TABLES `venta` WRITE;
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
-INSERT INTO `venta` VALUES ('2024-06-26',1,10,4),('2024-06-26',3,2,2),('2024-06-26',4,1,2),('2024-06-26',5,1,2),('2024-06-26',6,3,2),('2024-06-26',7,1,1),('2024-06-26',8,10,1),('2024-06-26',9,12,1);
+INSERT INTO `venta` VALUES ('2024-06-28',8,2,1),('2024-06-28',9,200,5);
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -283,4 +283,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-26 21:59:01
+-- Dump completed on 2024-06-28 22:21:06
