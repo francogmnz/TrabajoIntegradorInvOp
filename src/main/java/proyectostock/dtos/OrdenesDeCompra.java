@@ -20,12 +20,12 @@ import proyectostock.entities.TipoArticulo;
 public class OrdenesDeCompra extends javax.swing.JFrame {
 
     RellenarCombos re = new RellenarCombos();
-    RellenarCombos ru = new RellenarCombos();
+
     public OrdenesDeCompra() {
         initComponents();
         this.setLocationRelativeTo(null);
         re.RellenarComboBox("proveedor", "nombreProveedor", ComboProveedor);
-        ru.RellenarComboBox("articulo", "nombreArticulo", ComboArticulo);
+       // ru.RellenarComboArticulosProveedores("articulo", "nombreArticulo", ComboArticulo, txtProveedor);
         OrdenCompra objetoOrdenCompra = new OrdenCompra();
         objetoOrdenCompra.MostrarOrdenesCompra(tbTotalOrdenesCompra);
         txtProveedor.setVisible(false);
@@ -91,6 +91,11 @@ public class OrdenesDeCompra extends javax.swing.JFrame {
         ComboProveedor.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 ComboProveedorItemStateChanged(evt);
+            }
+        });
+        ComboProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ComboProveedorMouseClicked(evt);
             }
         });
         ComboProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -262,6 +267,7 @@ public class OrdenesDeCompra extends javax.swing.JFrame {
     private void ComboProveedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboProveedorItemStateChanged
        Proveedor objetoProveedor = new Proveedor();
        objetoProveedor.MostrarCodigoProveedor(ComboProveedor, txtProveedor);
+
     }//GEN-LAST:event_ComboProveedorItemStateChanged
 
     private void txtFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtFechaMouseClicked
@@ -282,6 +288,12 @@ public class OrdenesDeCompra extends javax.swing.JFrame {
         Articulo objetoArticulo = new Articulo();
        objetoArticulo.MostrarCodigoArticulo(ComboArticulo, txtArticulo);
     }//GEN-LAST:event_ComboArticuloItemStateChanged
+
+    private void ComboProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ComboProveedorMouseClicked
+        // TODO add your handling code here:
+       RellenarCombos ru = new RellenarCombos();
+       ru.RellenarComboArticulosProveedores("articulo", "nombreArticulo", ComboArticulo, txtProveedor);
+    }//GEN-LAST:event_ComboProveedorMouseClicked
 
     /**
      * @param args the command line arguments

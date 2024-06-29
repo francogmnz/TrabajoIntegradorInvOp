@@ -129,7 +129,6 @@ public class OrdenCompra {
       
       paramTablaTotalOrdenCompra.setModel(modelo);
       
-      //CORREGIIIIIIIIIIIIRRRRRR
       sql = "SELECT \n" +
       "    OrdenCompra.numOrdenCompra,\n" +
       "    OrdenCompra.fechaCreacionOC,\n" +
